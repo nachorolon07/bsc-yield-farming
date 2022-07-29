@@ -3,16 +3,14 @@ pragma solidity 0.8.15;
 
 import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import { IBEP20 } from "./bsc/IBEP20.sol";
-//import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+
 import { EnumerableSet } from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { BEP20GovernanceToken } from "./mock-bsc-tokens/BEP20GovernanceToken.sol";
 
 
-/**
- * @notice - NFTYieldFarming (BEP20 version on BSC) is the master contract of GovernanceToken. This contract can make GovernanceToken.
- */
+
 contract NFTYieldFarmingOnBSC is Ownable {
     using SafeMath for uint256;
     //using SafeERC20 for IERC20;
@@ -79,8 +77,7 @@ contract NFTYieldFarmingOnBSC is Ownable {
         return nftPoolInfo.length;
     }
 
-    // Add a new lp to the pool. Can only be called by the owner.
-    // XXX DO NOT add the same LP token more than once. Rewards will be messed up if you do.
+    
     function addNFTPool(
         IERC721 _nftToken,   /// NFT token as a target to stake
         IBEP20 _lpToken,     /// LP token (BEP20) to be staked
@@ -149,7 +146,7 @@ contract NFTYieldFarmingOnBSC is Ownable {
         return user.amount.mul(accGovernanceTokenPerShare).div(1e12).sub(user.rewardDebt);
     }
 
-    // Update reward vairables for all pools. Be careful of gas spending!
+    // Update reward vairables for all pools. fix gas needed
     function massUpdatePools() public {
         uint256 length = nftPoolInfo.length;
         for (uint256 pid = 0; pid < length; ++pid) {
